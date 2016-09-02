@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>双色球</title>
+    <style>
+        body,ul,li,button{margin:0;padding:0;}
+        #ball{width:280px;height:35px;margin:100px auto 0;}
+        li{list-style: none;float: left;width:35px;height:35px;border-radius: 50%;background-color: red;margin-right: 5px;font-size: 20px;line-height:35px;text-align: center;color:#ffffff;font-weight: 600;}
+        #ball .blue{background-color: blue;}
+        button{display:block;margin:0 auto;margin-top: 10px;color:#000;font-size: 18px;text-align: center;line-height:50px;width:100px;height:50px;border: 0 none;}
+    </style>
+</head>
+<body>
+    <ul id="ball">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li class="blue"></li>
+    </ul>
+    <button >随机一注</button>
+
+
+    <script>
+        var ball=document.getElementById("ball");
+        var linodes=ball.getElementsByTagName("li");//得到li节点
+        var btn=document.getElementsByTagName("button")[0];//button节点
+        var bluenode=linodes[linodes.length-1];//得到blue节点
+        btn.onclick=function(){
+            var redArr=[];
+            var blueArr=Math.floor(Math.random()*16+1);//随机取到1-17之间的数
+            var redNum=[];
+            for(i=1;i<34;i++){//得到1-33数组
+                redArr[i-1]=i;
+            }
+
+            for(j=0;j<linodes.length-1;j++){
+                var randomPos=Math.floor(Math.random()*redArr.length);//随机产生0-32的位置
+                redNum.push(redArr[randomPos]);//通过随机的位置找到随机的1-33的数，并放到数组redNum中
+                redArr.splice(randomPos,1);//将随即找到的这个数删掉
+            }
+            redNum.sort(function(a,b){//通过sort排序
+                if(a>b){
+                    return 1;
+                }else{
+                    return -1;
+                }
+            });
+            for(i=0;i<linodes.length-1;i++){
+                linodes[i].innerHTML=redNum[i];
+            }
+            bluenode.innerHTML=blueArr;
+        }
+    </script>
+</body>
+</html>
